@@ -1,0 +1,168 @@
+﻿<Window x:Class="JasteeqCraft.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JasteeqCraft"
+        mc:Ignorable="d"
+        
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        
+        
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Background="Transparent"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        
+        
+        
+        
+        MinHeight="450"
+        MinWidth="800"
+
+        MaxHeight="450"
+        MaxWidth="800"
+        
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Title="MainWindow" Height="450" Width="800">
+
+    <Border>
+        <Grid>
+            <Border Background="#292a29" Height="30"
+                    VerticalAlignment="Top"
+                    BorderThickness="0,0,0,1"
+                    BorderBrush="#fff"
+                    CornerRadius="20, 20, 0, 0"/>
+            <Grid Height="30" VerticalAlignment="Top">
+                <Button
+                    Style="{DynamicResource BtnNav}"
+                    Margin= "0, 0, 10, 0"
+                    Background="#0000"
+                    BorderBrush="#0000"
+                    Width="15"
+                    Height="15"
+                    Cursor="Hand"
+                    Click="Button_Cloase_Click"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right">
+                        <svgc:SvgViewbox Margin="0, 0, 0, 0"
+                            VerticalAlignment="Center"
+                             HorizontalAlignment="Right"
+                            Source="pack://application:,,,/Views/Resurces/Images/Exit.svg">
+                        </svgc:SvgViewbox>
+                </Button>
+
+                <Button
+                    Style="{DynamicResource BtnNav}"
+                    Margin= "0, 0, 30, 0"
+                    Background="#0000"
+                    BorderBrush="#0000"
+                    Cursor="Hand"
+                    Width="15"
+                    Height="15"
+                    Click="Button_Folding_Click"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right">
+
+                    <svgc:SvgViewbox Margin="0, 10, 0, 0"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Source="pack://application:,,,/Views/Resurces/Images/folding.svg">
+                    </svgc:SvgViewbox>
+                </Button>
+            </Grid>
+
+            <Grid Margin="0,30,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Background="#292a29"
+                        BorderThickness="0,0,1,0"
+                        BorderBrush="#fff">
+                    
+                    <StackPanel Cursor=""
+                                
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <Border Background="#3b3b3b"
+                                Margin="0,0,0,20"
+                                Width="50"
+                                Height="50"
+                                CornerRadius="30, 30, 30, 30"
+                                BorderThickness="2,2,2,2"
+                                BorderBrush="#fff" Cursor="">
+                            <Button
+                                Style="{DynamicResource BtnNav}"
+                                Margin= "0, 0, 0, 0"
+                                Background="#0000"
+                                BorderBrush="#0000"
+                                Width="30"
+                                Height="30"
+                                Cursor="Hand"
+                                Click="Button_PageHome_Click"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                                <svgc:SvgViewbox Margin="0, 0, 0, 0"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Source="pack://application:,,,/Views/Resurces/Images/Home.svg">
+                                </svgc:SvgViewbox>
+                            </Button>
+                        </Border>
+
+                        <Border Background="#3b3b3b"
+                                Width="50"
+                                Height="50"
+                                CornerRadius="30, 30, 30, 30"
+                                BorderThickness="2,2,2,2"
+                                BorderBrush="#fff" Cursor="">
+                            <Button
+                                Style="{DynamicResource BtnNav}"
+                                Margin= "0, 0, 0, 0"
+                                Background="#0000"
+                                BorderBrush="#0000"
+                                Width="25"
+                                Height="25"
+                                Cursor="Hand"
+                                Click="Button_PageSettings_Click"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                                <svgc:SvgViewbox Margin="0, 0, 0, 0"
+                                VerticalAlignment="Center"
+                                 HorizontalAlignment="Center"
+                                Source="pack://application:,,,/Views/Resurces/Images/settings.svg">
+                                </svgc:SvgViewbox>
+                            </Button>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <Frame x:Name="MainFrame"
+                       Grid.Column="1"
+                       NavigationUIVisibility="Hidden"
+                       Source=""
+                       Navigated="MainFrame_Navigated"
+                       Margin="0,0,0,0">
+                </Frame>
+            </Grid>
+        </Grid>
+    </Border>
+    
+    
+    <!--
+    <Grid Margin="10">
+        <StackPanel Margin="10">
+            <TextBlock Name="StatusText" Text="Готов к запуску." Margin="0,0,0,10"/>
+            <TextBox Name="Nick" Text="Nick" Margin="0,0,0,10"/>
+            <Button Name="LaunchButton" Content="Запустить Minecraft" Click="LaunchButton_Click" Height="30"/>
+            <ProgressBar x:Name="ProgressBarDownload"
+             Height="20"
+             Minimum="0"
+             Maximum="100"
+             Value="0" />
+        </StackPanel>
+    </Grid>
+    -->
+</Window>
