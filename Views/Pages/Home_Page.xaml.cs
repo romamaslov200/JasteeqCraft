@@ -48,37 +48,51 @@ namespace JasteeqCraft.Views.Pages
 
                 if (verPatch != ObjectJson.minecraftVersionPatch)
                 {
-                    await LauncherControl.DownloadMinecraft(ProgressBarDownload);
+                    await LauncherControl.DownloadMinecraft(ProgressBarDownload, StatusText);
+
 
                     StatusText.Text = "Распаковка завершена. Подготовка к запуску...";
 
                     ObjectJson.minecraftVersionPatch = verPatch;
                     jsonController.JsonSave(ObjectJson);
                 }
+                var path = new MinecraftPath(Path.Combine(Directory.GetCurrentDirectory(), "MinecraftSborks"));
 
-                var path = new MinecraftPath(Path.Combine(Directory.GetCurrentDirectory(), "MinecraftSborks-main"));
+                //var path = new MinecraftPath(Path.Combine(Directory.GetCurrentDirectory(), "MinecraftSborks-main"));
+                //MessageBox.Show(path.Versions);
                 var launcher = new MinecraftLauncher(path);
 
                 var versions = await launcher.GetAllVersionsAsync();
-
+                /*
                 if (versions.Count() == 0)
                 {
                     StatusText.Text = "Версии Minecraft не найдены!";
                     return;
                 }
+                */
+                
+                //var forgeVersion = versions.FirstOrDefault(v => v.Name.Contains("forge") && v.Name.Contains("1.20.1"));
+                var forgeVersion = versions.FirstOrDefault(v => v.Name.Contains("Forge 1.20.1"));
+                if (forgeVersion == null)
+                {
+                    StatusText.Text = "Forge 1.20.1 не найдён!";
+                    return;
+                }
+
+
 
                 var launchOption = new MLaunchOption
                 {
                     Session = MSession.CreateOfflineSession(Nick.Text),
-                    MaximumRamMb = 2048,
+                    MaximumRamMb = 12288,
                     GameLauncherName = "JasteeqCraft",
-                    ServerIp = "hcplay.ru"
+                    ServerIp = "54.37.238.70:25587"
                 };
 
-                var process = await launcher.CreateProcessAsync(versions[0].Name, launchOption);
+                var process = await launcher.CreateProcessAsync(forgeVersion.Name, launchOption);
                 process.Start();
 
-                StatusText.Text = $"Запущен Minecraft {versions[0].Name}";
+                StatusText.Text = $"Запущен Minecraft {forgeVersion.Name}";
             }
             catch (Exception ex)
             {

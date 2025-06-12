@@ -50,7 +50,7 @@
                     <TextBlock Grid.Column="2"
                            Text=""
                            Foreground="#fff"
-                           FontSize="20"
+                           FontSize="12"
                            Name="StatusText"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"/>
@@ -59,7 +59,8 @@
                                  Height="10"
                                  Minimum="0"
                                  Maximum="100"
-                                 Value="0" />
+                                 Value="0"
+                                 IsIndeterminate="False" Cursor=""/>
                 </StackPanel>
             </Grid>
             

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Net;
+using System.Net.Http.Headers;
 
 namespace JasteeqCraft.Core
 {
@@ -32,89 +33,104 @@ namespace JasteeqCraft.Core
             }
         }
 
-        public static Task DownloadMinecraft(ProgressBar bar)
+        public static async Task DownloadMinecraft(ProgressBar bar, TextBlock statusText = null)
         {
-            var tcs = new TaskCompletionSource<object>();
-
             string user = "romamaslov200";
             string repo = "MinecraftSborks";
             string branch = "main";
 
-            string zipUrl = $"https://github.com/{user}/{repo}/archive/refs/heads/{branch}.zip";
+            //string zipUrl = $"https://github.com/{user}/{repo}/archive/refs/heads/{branch}.zip";
+            //string zipUrl = $"https://github.com/{user}/{repo}/archive/{branch}.zip";
+            string zipUrl = $"http://194.87.239.214/MinecraftSborks.zip";
+
+
             string zipFileName = $"{repo}.zip";
             string extractPath = Directory.GetCurrentDirectory();
 
-            WebClient client = new WebClient();
-
-            // Инициализация прогресс-бара
-            bar.Dispatcher.Invoke(() =>
+            using (var httpClient = new HttpClient())
+            using (var response = await httpClient.GetAsync(zipUrl, HttpCompletionOption.ResponseHeadersRead))
             {
-                bar.IsIndeterminate = false;
-                bar.Minimum = 0;
-                bar.Maximum = 100;
-                bar.Value = 0;
-            });
+                var rs = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, zipUrl));
+                if (rs.Content.Headers.ContentLength.HasValue)
+                    MessageBox.Show("Размер файла: " + rs.Content.Headers.ContentLength.Value + " байт");
+                else
+                    MessageBox.Show("Content-Length отсутствует!");
 
-            client.DownloadProgressChanged += (s, e) =>
-            {
-                // Обновляем прогресс через Dispatcher
-                bar.Dispatcher.BeginInvoke(() =>
+
+
+                response.EnsureSuccessStatusCode();
+
+                var contentLength = response.Content.Headers.ContentLength;
+                bool canReportProgress = contentLength.HasValue;
+                long totalBytes = contentLength ?? -1;
+
+                using (var contentStream = await response.Content.ReadAsStreamAsync())
+                using (var fileStream = new FileStream(zipFileName, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true))
                 {
-                    bar.Value = e.ProgressPercentage;
-                });
-            };
+                    var buffer = new byte[8192];
+                    long totalRead = 0;
+                    int bytesRead;
 
-            client.DownloadFileCompleted += async (s, e) =>
-            {
-                if (e.Error != null)
-                {
-                    tcs.TrySetException(e.Error);
-                    return;
-                }
-
-                if (e.Cancelled)
-                {
-                    tcs.TrySetCanceled();
-                    return;
-                }
-
-                try
-                {
-                    // Распаковка
-                    await Task.Run(() =>
-                    {
-                        if (File.Exists(zipFileName))
-                        {
-                            ZipFile.ExtractToDirectory(zipFileName, extractPath, true);
-                            File.Delete(zipFileName); // Удаляем архив
-                        }
-                    });
-
-                    // Установка финального значения
                     bar.Dispatcher.Invoke(() =>
                     {
-                        bar.Value = 100;
+                        bar.IsIndeterminate = !canReportProgress;
+                        bar.Minimum = 0;
+                        bar.Maximum = 100;
+                        bar.Value = 0;
                     });
 
-                    tcs.TrySetResult(null);
+                    while ((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                    {
+                        await fileStream.WriteAsync(buffer, 0, bytesRead);
+                        totalRead += bytesRead;
+
+                        if (canReportProgress)
+                        {
+                            double progressPercent = (double)totalRead / totalBytes * 100;
+                            double mbRead = totalRead / 1024.0 / 1024.0;
+                            double mbTotal = totalBytes / 1024.0 / 1024.0;
+
+                            bar.Dispatcher.Invoke(() =>
+                            {
+                                bar.Value = progressPercent;
+                            });
+
+                            if (statusText != null)
+                            {
+                                statusText.Dispatcher.Invoke(() =>
+                                {
+                                    //statusText.Text = $"Загружено: {mbRead:F1} МБ / {mbTotal:F1} МБ ({progressPercent:F1}%)";
+                                    statusText.Text = $"{mbRead:F1} МБ / {mbTotal:F1} МБ ({progressPercent:F1}%)";
+                                });
+                            }
+                        }
+                    }
                 }
-                catch (Exception ex)
+            }
+
+            // Распаковка
+            if (File.Exists(zipFileName))
+            {
+                ZipFile.ExtractToDirectory(zipFileName, extractPath, true);
+                File.Delete(zipFileName);
+            }
+
+            // Завершение
+            bar.Dispatcher.Invoke(() =>
+            {
+                bar.Value = 100;
+            });
+
+            if (statusText != null)
+            {
+                statusText.Dispatcher.Invoke(() =>
                 {
-                    tcs.TrySetException(ex);
-                }
-            };
-
-            try
-            {
-                client.DownloadFileAsync(new Uri(zipUrl), zipFileName);
+                    statusText.Text = $"Загрузка завершена (100%)";
+                });
             }
-            catch (Exception ex)
-            {
-                tcs.TrySetException(ex);
-            }
-
-            return tcs.Task;
         }
+
+
 
 
     }
