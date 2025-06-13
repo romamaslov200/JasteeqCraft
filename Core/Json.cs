@@ -10,9 +10,10 @@ namespace WpfApp.Core
     class Json
     {
         public string minecraftVersionPatch { get; set; } = "";
+        public string launcherVersionPatch { get; set; } = "0.3";
 
         public int vRam { get; set; } = 2000;
 
-        public string Nickname { get; set; } = "Player";
+        public string Nickname { get; set; } = "Nickname";
     }
 }

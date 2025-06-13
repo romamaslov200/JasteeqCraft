@@ -2,12 +2,15 @@
 using System.IO;
 using System.IO.Compression;
 using System.Net;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Sockets;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Net;
-using System.Net.Http.Headers;
+using System.Windows.Shapes;
 
 namespace JasteeqCraft.Core
 {
@@ -15,9 +18,44 @@ namespace JasteeqCraft.Core
     {
         public static WebClient WClient = new WebClient();
 
+
+
+        public static async Task<string> CheckStatusAsync(string serverIp)
+        {
+            string url = $"https://api.mcsrvstat.us/2/{serverIp}";
+
+            using (HttpClient client = new HttpClient())
+            {
+                // User-Agent
+                client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; MyApp/1.0)");
+
+                var response = await client.GetAsync(url);
+                response.EnsureSuccessStatusCode(); // исключение если не 2xx
+
+                var responseString = await response.Content.ReadAsStringAsync();
+                var jsonDoc = JsonDocument.Parse(responseString);
+
+                bool online = jsonDoc.RootElement.GetProperty("online").GetBoolean();
+
+                if (online)
+                {
+                    var players = jsonDoc.RootElement.GetProperty("players");
+                    int onlinePlayers = players.GetProperty("online").GetInt32();
+                    int maxPlayers = players.GetProperty("max").GetInt32();
+                    return $"{onlinePlayers}/{maxPlayers}";
+                }
+                else
+                {
+                    return "Сервер офлайн";
+                }
+            }
+        }
+
+
         public static async Task<string> GetMinecraftVersion()
         {
-            string url = "https://raw.githubusercontent.com/romamaslov200/MinecraftSborks/refs/heads/main/minecraftVersionPatch.text";
+            //string url = "https://raw.githubusercontent.com/romamaslov200/MinecraftSborks/refs/heads/main/minecraftVersionPatch.text";
+            string url = "http://194.87.239.214/JasteeqCraft/minecraft/minecraftVersionPatch.txt";
 
             using (HttpClient client = new HttpClient())
             {
@@ -41,11 +79,18 @@ namespace JasteeqCraft.Core
 
             //string zipUrl = $"https://github.com/{user}/{repo}/archive/refs/heads/{branch}.zip";
             //string zipUrl = $"https://github.com/{user}/{repo}/archive/{branch}.zip";
-            string zipUrl = $"http://194.87.239.214/MinecraftSborks.zip";
+            //string zipUrl = $"http://194.87.239.214/MinecraftSborks.zip";
+            string zipUrl = $"http://194.87.239.214/JasteeqCraft/minecraft/MinecraftSborks.zip";
 
 
             string zipFileName = $"{repo}.zip";
             string extractPath = Directory.GetCurrentDirectory();
+
+            if (Directory.Exists($"{repo}"))
+            {
+                Directory.Delete(repo, recursive: true);
+            }
+
 
             using (var httpClient = new HttpClient())
             using (var response = await httpClient.GetAsync(zipUrl, HttpCompletionOption.ResponseHeadersRead))

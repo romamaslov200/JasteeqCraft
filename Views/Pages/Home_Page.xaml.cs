@@ -1,9 +1,12 @@
 ﻿using CmlLib.Core;
 using CmlLib.Core.Auth;
+using CmlLib.Core.Installer.Forge;
 using CmlLib.Core.ProcessBuilder;
 using JasteeqCraft.Core;
+using JasteeqCraft.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -23,26 +26,107 @@ namespace JasteeqCraft.Views.Pages
     /// <summary>
     /// Логика взаимодействия для Home_Page.xaml
     /// </summary>
+    
+    public class NullToVisibilityConverter : IValueConverter
+        {
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                return string.IsNullOrEmpty(value as string) ? Visibility.Collapsed : Visibility.Visible;
+            }
+
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
     public partial class Home_Page : Page
     {
         private JsonController jsonController = new JsonController();
         private Json ObjectJson;
 
+        private readonly TelegramParser _parser = new TelegramParser();
+
         public Home_Page()
         {
             InitializeComponent();
             ObjectJson = jsonController.JsonStart();
+            //DownloadForge();
+            this.KeepAlive = true; // 
+
+            Nick.Text = ObjectJson.Nickname;
+            PostLoad();
+            UpdateServerStatus();
         }
 
+        private async void UpdateServerStatus()
+        {
+            string serverIp = "54.37.238.70:25587";
+            string status = await LauncherControl.CheckStatusAsync(serverIp);
+            OnlineLable.Content = status;
+        }
+
+        private async void PostLoad()
+        {
+            var channelName = "testanall";
+            if (string.IsNullOrEmpty(channelName)) return;
+
+            Mouse.OverrideCursor = Cursors.Wait;
+            try
+            {
+                var lastPostWithPhoto = await _parser.ParseLastPostWithPhoto(channelName);
+                PostsList.ItemsSource = lastPostWithPhoto != null ? new List<TelegramPost> { lastPostWithPhoto } : null;
+
+                if (lastPostWithPhoto == null)
+                {
+                    MessageBox.Show("Не найдено постов с фотографиями", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null;
+            }
+        }
+
+
+        public static async Task DownloadForge()
+        {
+            string mcpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MinecraftSborks");
+            Directory.CreateDirectory(mcpath);
+
+            var path = new MinecraftPath(mcpath);
+            var launcher = new MinecraftLauncher(path);
+
+            //await launcher.InstallAsync("1.12.2");
+
+            // Установка Forge
+            var forgeInstaller = new ForgeInstaller(launcher);
+
+            await forgeInstaller.Install("1.20.1", "47.3.0");
+
+            // Запуск Minecraft с установленным Forge
+            var minecraftProcess = await launcher.CreateProcessAsync("1.20.1-forge-47.3.0", new MLaunchOption
+            {
+                Session = MSession.CreateOfflineSession("Nick"),
+                MaximumRamMb = 2048,
+                GameLauncherName = "JasteeqCraft",
+                ServerIp = "hcplay.ru"
+            });
+
+            MessageBox.Show("START");
+            minecraftProcess.Start();
+        }
+        
         private async void LaunchButton_Click(object sender, RoutedEventArgs e)
         {
             LaunchButton.IsEnabled = false;
-            StatusText.Text = "Начинаем загрузку...";
+            StatusText.Text = "Подготовка";
             ProgressBarDownload.Value = 0;
 
             try
             {
                 string verPatch = await LauncherControl.GetMinecraftVersion();
+                ObjectJson = jsonController.JsonStart();
                 MessageBox.Show(verPatch);
                 MessageBox.Show($"Версия Minecraft на сервере: {verPatch}\nВерсия Minecraft на устройстве: {ObjectJson.minecraftVersionPatch}");
 
@@ -72,7 +156,7 @@ namespace JasteeqCraft.Views.Pages
                 */
                 
                 //var forgeVersion = versions.FirstOrDefault(v => v.Name.Contains("forge") && v.Name.Contains("1.20.1"));
-                var forgeVersion = versions.FirstOrDefault(v => v.Name.Contains("Forge 1.20.1"));
+                var forgeVersion = versions.FirstOrDefault(v => v.Name.Contains("forge-47.3.0") && v.Name.Contains("1.20.1"));
                 if (forgeVersion == null)
                 {
                     StatusText.Text = "Forge 1.20.1 не найдён!";
@@ -84,7 +168,7 @@ namespace JasteeqCraft.Views.Pages
                 var launchOption = new MLaunchOption
                 {
                     Session = MSession.CreateOfflineSession(Nick.Text),
-                    MaximumRamMb = 12288,
+                    MaximumRamMb = ObjectJson.vRam,
                     GameLauncherName = "JasteeqCraft",
                     ServerIp = "54.37.238.70:25587"
                 };
@@ -92,7 +176,8 @@ namespace JasteeqCraft.Views.Pages
                 var process = await launcher.CreateProcessAsync(forgeVersion.Name, launchOption);
                 process.Start();
 
-                StatusText.Text = $"Запущен Minecraft {forgeVersion.Name}";
+                //StatusText.Text = $"Запущен Minecraft {forgeVersion.Name}";
+                StatusText.Text = $"Запуск";
             }
             catch (Exception ex)
             {
@@ -103,6 +188,12 @@ namespace JasteeqCraft.Views.Pages
             {
                 LaunchButton.IsEnabled = true;
             }
+        }
+
+        private void Nick_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ObjectJson.Nickname = Nick.Text;
+            jsonController.JsonSave(ObjectJson);
         }
     }
 }

@@ -5,10 +5,24 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:JasteeqCraft.Views.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Settings_Page">
+      d:DesignHeight="420" d:DesignWidth="730"
 
-    <Grid>
-        
-    </Grid>
+      Background="#171717"
+
+      Title="Настройки">
+
+    <Border>
+        <StackPanel
+            VerticalAlignment="Center"
+            Width="300">
+
+            <Label Content="Оперативная память: "
+                   Foreground="#fff"
+                   Name="Vram_Lable"/>
+            <Slider TickFrequency="500"
+                    IsSnapToTickEnabled="True"
+                    Name="VramSlider"
+                    ValueChanged="VramSlider_ValueChanged"/>
+        </StackPanel>
+    </Border>
 </Page>

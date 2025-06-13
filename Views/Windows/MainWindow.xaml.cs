@@ -2,6 +2,7 @@
 using CmlLib.Core.Auth;
 using CmlLib.Core.ProcessBuilder;
 using JasteeqCraft.Core;
+using JasteeqCraft.Models;
 using JasteeqCraft.Views.Pages;
 using System;
 using System.Diagnostics;
@@ -20,6 +21,8 @@ namespace JasteeqCraft
         private JsonController jsonController = new JsonController();
         private Json ObjectJson;
 
+        private Updater updater = new Updater();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -28,7 +31,10 @@ namespace JasteeqCraft
             NavArcCore.MainWindow = this;
             NavArcCore.MainFrame = MainFrame;
             //NavArcCore.MainFrame.NavigationService.Navigate(new Home_Page());
-            NavArcCore.ChageFrame(new Home_Page());
+            //NavArcCore.ChangeFrame(new Home_Page());
+            NavArcCore.ChangeFrame<Home_Page>();
+
+            updater.start();
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -62,12 +68,14 @@ namespace JasteeqCraft
 
         private void Button_PageHome_Click(object sender, RoutedEventArgs e)
         {
-            NavArcCore.ChageFrame(new Home_Page());
+            //NavArcCore.ChangeFrame(new Home_Page());
+            NavArcCore.ChangeFrame<Home_Page>();
         }
 
         private void Button_PageSettings_Click(object sender, RoutedEventArgs e)
         {
-            NavArcCore.ChageFrame(new Settings_Page());
+            //NavArcCore.ChangeFrame(new Settings_Page());
+            NavArcCore.ChangeFrame<Settings_Page>();
         }
 
         /*
