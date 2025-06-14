@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="Views\Resurces\Exit.svg" />
     <None Remove="Views\Resurces\folding.svg" />
+    <None Remove="Views\Resurces\Images\folder-svgrepo-com.svg" />
     <None Remove="Views\Resurces\Images\home.svg" />
     <None Remove="Views\Resurces\Images\ServerIco.jpg" />
     <None Remove="Views\Resurces\Images\settings.svg" />
@@ -37,10 +38,12 @@
     <PackageReference Include="SharpVectors" Version="1.8.4.2" />
     <PackageReference Include="System.Management" Version="10.0.0-preview.5.25277.114" />
     <PackageReference Include="System.Text.Json" Version="10.0.0-preview.4.25258.110" />
+    <PackageReference Include="WindowsAPICodePack" Version="8.0.6" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Views\Resurces\Images\Exit.svg" />
+    <Resource Include="Views\Resurces\Images\folder-svgrepo-com.svg" />
     <Resource Include="Views\Resurces\Images\folding.svg" />
     <Resource Include="Views\Resurces\Images\home.svg" />
     <Resource Include="Views\Resurces\Images\ServerIco.jpg" />

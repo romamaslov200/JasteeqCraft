@@ -129,8 +129,9 @@ namespace JasteeqCraft.Views.Pages
                 ObjectJson = jsonController.JsonStart();
                 MessageBox.Show(verPatch);
                 MessageBox.Show($"Версия Minecraft на сервере: {verPatch}\nВерсия Minecraft на устройстве: {ObjectJson.minecraftVersionPatch}");
-
-                if (verPatch != ObjectJson.minecraftVersionPatch)
+                MessageBox.Show($"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft");
+                MessageBox.Show(Directory.Exists($"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft").ToString());
+                if (verPatch != ObjectJson.minecraftVersionPatch || !Directory.Exists($"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft"))
                 {
                     await LauncherControl.DownloadMinecraft(ProgressBarDownload, StatusText);
 
@@ -140,7 +141,7 @@ namespace JasteeqCraft.Views.Pages
                     ObjectJson.minecraftVersionPatch = verPatch;
                     jsonController.JsonSave(ObjectJson);
                 }
-                var path = new MinecraftPath(Path.Combine(Directory.GetCurrentDirectory(), "MinecraftSborks"));
+                var path = new MinecraftPath(Path.Combine(ObjectJson.minecraftPath, "JasteeqCraftMincraft"));
 
                 //var path = new MinecraftPath(Path.Combine(Directory.GetCurrentDirectory(), "MinecraftSborks-main"));
                 //MessageBox.Show(path.Versions);
@@ -183,6 +184,7 @@ namespace JasteeqCraft.Views.Pages
             {
                 StatusText.Text = "Ошибка при запуске!";
                 MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                Logs.AddLog($"{ex.Message}");
             }
             finally
             {

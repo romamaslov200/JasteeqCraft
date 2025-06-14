@@ -17,6 +17,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfApp.Core;
 
+using Microsoft.WindowsAPICodePack.Dialogs;
+
+
 namespace JasteeqCraft.Views.Pages
 {
     /// <summary>
@@ -33,7 +36,7 @@ namespace JasteeqCraft.Views.Pages
             ObjectJson = jsonController.JsonStart();
             this.KeepAlive = true; // Типо для сохранения состояния страници но работает и без этого
 
-
+            PatchLable.Text = $"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft";
             Vram_Lable.Content = $"Оперативная память: {ObjectJson.vRam} MB";
 
             ulong totalMemory = 0;
@@ -61,5 +64,21 @@ namespace JasteeqCraft.Views.Pages
             jsonController.JsonSave(ObjectJson);
         }
 
+        private async void MinecraftPatch(object sender, RoutedEventArgs e)
+        {
+            var dlg = new CommonOpenFileDialog
+            {
+                IsFolderPicker = true,
+                Title = "Выберите папку",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
+            };
+
+            if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                ObjectJson.minecraftPath = dlg.FileName;
+                jsonController.JsonSave(ObjectJson);
+                PatchLable.Text = $"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft";
+            }
+        }
     }
 }
