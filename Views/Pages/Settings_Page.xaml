@@ -17,7 +17,7 @@
     <Border>
         <StackPanel
             VerticalAlignment="Center"
-            Width="300">
+            Width="400">
 
             <Label Content="Оперативная память: "
                    Foreground="#fff"
@@ -26,29 +26,46 @@
                     IsSnapToTickEnabled="True"
                     Name="VramSlider"
                     ValueChanged="VramSlider_ValueChanged"/>
+            <Grid Margin="0, 20, 0, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button
+                    Style="{DynamicResource BtnNav}"
+                    Margin= "0, 0, 0, 0"
+                    Background="#0000"
+                    BorderBrush="#0000"
+                    Cursor="Hand"
+                    Width="25"
+                    Height="25"
+                    VerticalAlignment="Center"
+                    Click="MinecraftPatch"
+                    HorizontalAlignment="Left">
 
-            <TextBlock Text="Путь до сборки"
-                   Name="PatchLable"
-                   TextWrapping="Wrap"
-                   Foreground="#fff"/>
-            <Button
-                Style="{DynamicResource BtnNav}"
-                Margin= "5, 0, 0, 0"
-                Background="#0000"
-                BorderBrush="#0000"
-                Cursor="Hand"
-                Width="25"
-                Height="25"
-                VerticalAlignment="Center"
-                Click="MinecraftPatch"
-                HorizontalAlignment="Left">
+                    <svgc:SvgViewbox Margin="0, 0, 0, 0"
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Center"
+                                     Source="pack://application:,,,/Views/Resurces/Images/folder-svgrepo-com.svg">
+                    </svgc:SvgViewbox>
+                </Button>
 
-                <svgc:SvgViewbox Margin="0, 0, 0, 0"
-                                 VerticalAlignment="Center"
-                                 HorizontalAlignment="Center"
-                                 Source="pack://application:,,,/Views/Resurces/Images/folder-svgrepo-com.svg">
-                </svgc:SvgViewbox>
-            </Button>
+                <TextBlock Grid.Column="1"  Text="Путь устоновки сборки:"
+                           TextWrapping="Wrap"
+                           VerticalAlignment="Center"
+                           
+                           Foreground="#fff"/>
+                <TextBlock Grid.Column="2"
+                           Text="Путь устоновки сборки:"
+                           Name="PatchLable"
+                           FontSize="10"
+                           TextAlignment="Left"
+                            VerticalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Foreground="#fff"/>
+            </Grid>
+            
         </StackPanel>
     </Border>
 </Page>

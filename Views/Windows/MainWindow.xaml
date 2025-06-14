@@ -31,13 +31,13 @@
         <Grid>
             <Border Background="#292a29" Height="30"
                     VerticalAlignment="Top"
-                    BorderThickness="0,0,0,1"
+                    BorderThickness="1,1,1,1"
                     BorderBrush="#fff"
                     CornerRadius="20, 20, 0, 0"/>
             <Grid Height="30" VerticalAlignment="Top">
                 <Button
                     Style="{DynamicResource BtnNav}"
-                    Margin= "0, 0, 10, 0"
+                    Margin= "0, 0, 15, 0"
                     Background="#0000"
                     BorderBrush="#0000"
                     Width="15"
@@ -55,7 +55,7 @@
 
                 <Button
                     Style="{DynamicResource BtnNav}"
-                    Margin= "0, 0, 30, 0"
+                    Margin= "0, 0, 40, 0"
                     Background="#0000"
                     BorderBrush="#0000"
                     Cursor="Hand"
@@ -79,7 +79,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Border Background="#292a29"
-                        BorderThickness="0,0,1,0"
+                        BorderThickness="1,1,1,1"
                         BorderBrush="#fff">
                     
                     <StackPanel Cursor=""
@@ -98,16 +98,17 @@
                                 Margin= "0, 0, 0, 0"
                                 Background="#0000"
                                 BorderBrush="#0000"
-                                Width="30"
-                                Height="30"
+                                Width="40"
+                                Height="40"
                                 Cursor="Hand"
                                 Click="Button_PageHome_Click"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center">
                                 <svgc:SvgViewbox Margin="0, 0, 0, 0"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Source="pack://application:,,,/Views/Resurces/Images/Home.svg">
+                                                 VerticalAlignment="Center"
+                                                 Width="30"
+                                                 HorizontalAlignment="Center"
+                                    Source="pack://application:,,,/Views/Resurces/Images/Home.svg" Cursor="">
                                 </svgc:SvgViewbox>
                             </Button>
                         </Border>
@@ -123,16 +124,17 @@
                                 Margin= "0, 0, 0, 0"
                                 Background="#0000"
                                 BorderBrush="#0000"
-                                Width="25"
-                                Height="25"
+                                Width="40"
+                                Height="40"
                                 Cursor="Hand"
                                 Click="Button_PageSettings_Click"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center">
                                 <svgc:SvgViewbox Margin="0, 0, 0, 0"
-                                VerticalAlignment="Center"
-                                 HorizontalAlignment="Center"
-                                Source="pack://application:,,,/Views/Resurces/Images/settings.svg">
+                                                 Width="30"
+                                                 VerticalAlignment="Center"
+                                                 HorizontalAlignment="Center"
+                                                 Source="pack://application:,,,/Views/Resurces/Images/settings.svg">
                                 </svgc:SvgViewbox>
                             </Button>
                         </Border>

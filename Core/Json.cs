@@ -19,5 +19,7 @@ namespace WpfApp.Core
         public int vRam { get; set; } = 2000;
 
         public string Nickname { get; set; } = "Nickname";
+
+        public double TotalMinutesPlayed { get; set; } = 0;
     }
 }

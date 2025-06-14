@@ -6,6 +6,9 @@
       xmlns:local="clr-namespace:JasteeqCraft.Views.Pages"
       mc:Ignorable="d" 
       
+      xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+      
+      
       d:DesignHeight="420" d:DesignWidth="730"
       
       Background="#171717"
@@ -227,6 +230,59 @@
                             HorizontalAlignment="Left"
                             />
                 </StackPanel>
+
+                <StackPanel Grid.Column="2"
+                            VerticalAlignment="Bottom"
+                            Orientation="Horizontal"
+                            Margin="15,0,0,5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="35"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            Grid.Column="0"
+                            Style="{DynamicResource BtnNav}"
+                            Margin= "0, 0, 0, 0"
+                            Background="#0000"
+                            IsEnabled="False"
+                            BorderBrush="#0000"
+                            Width="25"
+                            Height="25"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Left">
+
+                            <svgc:SvgViewbox Margin="0, 0, 0, 0"
+                                             VerticalAlignment="Center"
+                                             HorizontalAlignment="Center"
+                                             Source="pack://application:,,,/Views/Resurces/Images/clock-history-svgrepo-com.svg">
+                            </svgc:SvgViewbox>
+                        </Button>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0"
+                                   FontSize="12"
+                                   VerticalAlignment="Bottom"
+                                   Padding="0"
+                                   Content="Вы играли"
+                                   Foreground="#fff"
+                                   Cursor=""/>
+                            <Label Grid.Row="1"
+                                   FontSize="12"
+                                   VerticalAlignment="Center"
+                                   Padding="0"
+                                   Name="TotalMinutesLable"
+                                   Content="0 м."
+                                   Foreground="#fff"
+                                   Cursor=""/>
+                        </Grid>
+                    </Grid>
+
+                </StackPanel>
+
                 <StackPanel Grid.Column="1"
                             VerticalAlignment="Center"
                             Margin="20,0,0,0">

@@ -70,7 +70,7 @@ namespace JasteeqCraft.Views.Pages
             {
                 IsFolderPicker = true,
                 Title = "Выберите папку",
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
+                InitialDirectory = ObjectJson.minecraftPath
             };
 
             if (dlg.ShowDialog() == CommonFileDialogResult.Ok)

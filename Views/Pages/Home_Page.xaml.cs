@@ -4,6 +4,7 @@ using CmlLib.Core.Installer.Forge;
 using CmlLib.Core.ProcessBuilder;
 using JasteeqCraft.Core;
 using JasteeqCraft.Models;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -57,6 +58,21 @@ namespace JasteeqCraft.Views.Pages
             Nick.Text = ObjectJson.Nickname;
             PostLoad();
             UpdateServerStatus();
+            TotalMinutesLable_Loaded();
+        }
+
+        public void TotalMinutesLable_Loaded()
+        {
+            double totalMinutes = Math.Round(ObjectJson.TotalMinutesPlayed, 1);
+            
+            if (totalMinutes > 60)
+            {
+                TotalMinutesLable.Content = $"{Math.Round(ObjectJson.TotalMinutesPlayed/60, 1)} ч.";
+            }
+            else
+            {
+                TotalMinutesLable.Content = $"{Math.Round(ObjectJson.TotalMinutesPlayed, 1)} м.";
+            }
         }
 
         private async void UpdateServerStatus()
@@ -179,6 +195,14 @@ namespace JasteeqCraft.Views.Pages
 
                 //StatusText.Text = $"Запущен Minecraft {forgeVersion.Name}";
                 StatusText.Text = $"Запуск";
+
+                DateTime startTime = DateTime.Now;
+                await process.WaitForExitAsync(); // Exit Jdom
+                DateTime endTime = DateTime.Now;
+
+                TimeSpan playedTime = endTime - startTime;
+
+                SavePlayedTimeToFile(Nick.Text, playedTime);
             }
             catch (Exception ex)
             {
@@ -197,5 +221,17 @@ namespace JasteeqCraft.Views.Pages
             ObjectJson.Nickname = Nick.Text;
             jsonController.JsonSave(ObjectJson);
         }
+
+        void SavePlayedTimeToFile(string nickname, TimeSpan sessionTime)
+        {
+            double totalMinutes = ObjectJson.TotalMinutesPlayed;
+
+            totalMinutes += sessionTime.TotalMinutes;
+
+            ObjectJson.TotalMinutesPlayed = totalMinutes;
+            jsonController.JsonSave(ObjectJson);
+            TotalMinutesLable_Loaded();
+        }
+
     }
 }

@@ -5,7 +5,7 @@ namespace WpfApp.Core
 {
     class JsonController
     {
-        private const string RegistryRoot = @"SOFTWARE\JasteeqCraft";
+        public const string RegistryRoot = @"SOFTWARE\JasteeqCraft";
 
         public Json JsonStart()
         {
@@ -21,6 +21,8 @@ namespace WpfApp.Core
                     json.launcherVersionPatch = key.GetValue("LauncherVersionPatch", json.launcherVersionPatch)?.ToString();
                     json.vRam = Convert.ToInt32(key.GetValue("VRam", json.vRam));
                     json.Nickname = key.GetValue("Nickname", json.Nickname)?.ToString();
+                    json.TotalMinutesPlayed = Convert.ToDouble(key.GetValue("TotalMinutesPlayed", json.TotalMinutesPlayed));
+
                 }
             }
 
@@ -38,6 +40,7 @@ namespace WpfApp.Core
                 key.SetValue("LauncherVersionPatch", json.launcherVersionPatch);
                 key.SetValue("VRam", json.vRam);
                 key.SetValue("Nickname", json.Nickname);
+                key.SetValue("TotalMinutesPlayed", json.TotalMinutesPlayed);
             }
         }
     }
