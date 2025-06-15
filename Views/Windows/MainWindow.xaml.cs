@@ -26,8 +26,9 @@ namespace JasteeqCraft
 
         public MainWindow()
         {
-            InitializeComponent();
             ObjectJson = jsonController.JsonStart();
+            LauncherControl.SetTheme(ObjectJson.Theme);
+            InitializeComponent();
 
             NavArcCore.MainWindow = this;
             NavArcCore.MainFrame = MainFrame;
@@ -79,6 +80,14 @@ namespace JasteeqCraft
             NavArcCore.ChangeFrame<Settings_Page>();
         }
 
+        private void Button_WebSite_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "http://194.87.239.214/1/",
+                UseShellExecute = true
+            });
+        }
         /*
         private async void LaunchButton_Click(object sender, RoutedEventArgs e)
         {

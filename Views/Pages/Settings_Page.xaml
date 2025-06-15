@@ -10,14 +10,37 @@
       
       d:DesignHeight="420" d:DesignWidth="730"
 
-      Background="#171717"
-
       Title="Настройки">
 
     <Border>
         <StackPanel
             VerticalAlignment="Center"
             Width="400">
+
+            <Label Content="Тема"
+                   Foreground="#fff"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+            <StackPanel Margin="0,0,0,20"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top">
+                <RadioButton Name="Dark"
+                             Content="Dark"
+                             Foreground="White"
+                             Margin="0, 0, 10, 0"
+                             GroupName="ThemeGroup"
+                             Checked="RadioButton_Checked"/>
+
+                <RadioButton Name="Pink"
+                             Content="Pink"
+                             Foreground="White"
+                             Margin="0, 0, 0, 0"
+                             Checked="RadioButton_Checked"
+                             GroupName="ThemeGroup"/>
+            </StackPanel>
+
+
 
             <Label Content="Оперативная память: "
                    Foreground="#fff"

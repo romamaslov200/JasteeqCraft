@@ -23,6 +23,7 @@ namespace WpfApp.Core
                     json.Nickname = key.GetValue("Nickname", json.Nickname)?.ToString();
                     json.TotalMinutesPlayed = Convert.ToDouble(key.GetValue("TotalMinutesPlayed", json.TotalMinutesPlayed));
 
+                    json.Theme = key.GetValue("Theme", json.Theme)?.ToString();
                 }
             }
 
@@ -41,6 +42,8 @@ namespace WpfApp.Core
                 key.SetValue("VRam", json.vRam);
                 key.SetValue("Nickname", json.Nickname);
                 key.SetValue("TotalMinutesPlayed", json.TotalMinutesPlayed);
+
+                key.SetValue("Theme", json.Theme);
             }
         }
     }

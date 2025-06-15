@@ -80,6 +80,10 @@ namespace JasteeqCraft.Views.Pages
             string serverIp = "54.37.238.70:25587";
             string status = await LauncherControl.CheckStatusAsync(serverIp);
             OnlineLable.Content = status;
+            
+            double width = this.ActualWidth;
+            double height = this.ActualHeight;
+            //MessageBox.Show($"width={width};\nheight={height}");
         }
 
         private async void PostLoad()
@@ -95,7 +99,7 @@ namespace JasteeqCraft.Views.Pages
 
                 if (lastPostWithPhoto == null)
                 {
-                    MessageBox.Show("Не найдено постов с фотографиями", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //MessageBox.Show("Не найдено постов с фотографиями", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             finally
@@ -145,10 +149,10 @@ namespace JasteeqCraft.Views.Pages
             {
                 string verPatch = await LauncherControl.GetMinecraftVersion();
                 ObjectJson = jsonController.JsonStart();
-                MessageBox.Show(verPatch);
-                MessageBox.Show($"Версия Minecraft на сервере: {verPatch}\nВерсия Minecraft на устройстве: {ObjectJson.minecraftVersionPatch}");
-                MessageBox.Show($"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft");
-                MessageBox.Show(Directory.Exists($"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft").ToString());
+                //MessageBox.Show(verPatch);
+                //MessageBox.Show($"Версия Minecraft на сервере: {verPatch}\nВерсия Minecraft на устройстве: {ObjectJson.minecraftVersionPatch}");
+                //MessageBox.Show($"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft");
+                //MessageBox.Show(Directory.Exists($"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft").ToString());
                 if (verPatch != ObjectJson.minecraftVersionPatch || !Directory.Exists($"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft"))
                 {
                     await LauncherControl.DownloadMinecraft(ProgressBarDownload, StatusText);

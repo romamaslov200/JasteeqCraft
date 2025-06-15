@@ -100,11 +100,12 @@ namespace JasteeqCraft.Core
             using (var response = await httpClient.GetAsync(zipUrl, HttpCompletionOption.ResponseHeadersRead))
             {
                 var rs = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, zipUrl));
+                /*
                 if (rs.Content.Headers.ContentLength.HasValue)
                     MessageBox.Show("Размер файла: " + rs.Content.Headers.ContentLength.Value + " байт");
                 else
                     MessageBox.Show("Content-Length отсутствует!");
-
+                */
 
 
                 response.EnsureSuccessStatusCode();
@@ -179,7 +180,39 @@ namespace JasteeqCraft.Core
             }
         }
 
+        public static void SetTheme(string theme)
+        {
+            ObjectJson = jsonController.JsonStart();
 
+            var dict = new ResourceDictionary();
+
+            switch (theme)
+            {
+                case "Dark":
+                    dict.Source = new Uri("pack://application:,,,/Views/Styles/Themes/DarkTheme.xaml", UriKind.Absolute);
+                    ObjectJson.Theme = "Dark";
+                    jsonController.JsonSave(ObjectJson);
+                    break;
+                case "Pink":
+                    dict.Source = new Uri("pack://application:,,,/Views/Styles/Themes/PinkTheme.xaml", UriKind.Absolute);
+                    ObjectJson.Theme = "Pink";
+                    jsonController.JsonSave(ObjectJson);
+                    break;
+                default:
+                    dict.Source = new Uri("pack://application:,,,/Views/Styles/Themes/DarkTheme.xaml", UriKind.Absolute);
+                    break;
+            }
+
+            // Удаляем старую тему (если была)
+            var oldDict = Application.Current.Resources.MergedDictionaries
+                .FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Contains("Theme"));
+
+            if (oldDict != null)
+                Application.Current.Resources.MergedDictionaries.Remove(oldDict);
+
+            // Добавляем новую
+            Application.Current.Resources.MergedDictionaries.Add(dict);
+        }
 
 
     }

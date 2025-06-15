@@ -14,12 +14,14 @@ namespace WpfApp.Core
         public string minecraftPath { get; set; } = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}";
 
         public string minecraftVersionPatch { get; set; } = "";
-        public string launcherVersionPatch { get; set; } = "0.3";
+        public string launcherVersionPatch { get; set; } = "0.1";
 
         public int vRam { get; set; } = 2000;
 
         public string Nickname { get; set; } = "Nickname";
 
         public double TotalMinutesPlayed { get; set; } = 0;
+
+        public string Theme { get; set; } = "Dark";
     }
 }

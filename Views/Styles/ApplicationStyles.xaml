@@ -103,67 +103,6 @@
 
 
 
-
-    <Style x:Key="MainButton" TargetType="Button">
-        <Setter Property="Background" Value="#4c4c4c"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="Padding" Value="10,5"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Margin" Value="5"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}"
-                        CornerRadius="10"
-                        BorderBrush="White"
-                        BorderThickness="2">
-                        <ContentPresenter HorizontalAlignment="Center"
-                                      VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-
-    <Style x:Key="MainTextBox" TargetType="TextBox">
-        <Setter Property="Foreground" Value="#fff"/>
-        <Setter Property="Background" Value="#2c2c2c"/>
-        <Setter Property="Padding" Value="2"/>
-        <Setter Property="BorderBrush" Value="Gray"/>
-        <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="TextBox">
-                    <Border x:Name="border"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="6"
-                        SnapsToDevicePixels="True">
-                        <ScrollViewer x:Name="PART_ContentHost"
-                                  Margin="0"
-                                  Focusable="False"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="#0078D7"/>
-                            <Setter TargetName="border" Property="BorderThickness" Value="2"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="#888888"/>
-                            <Setter TargetName="border" Property="Background" Value="#EEE"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-
     <Style x:Key="MainProgressBar" TargetType="ProgressBar">
         <Setter Property="Height" Value="20"/>
         <Setter Property="Template">

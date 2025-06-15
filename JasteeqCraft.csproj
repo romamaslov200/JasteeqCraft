@@ -13,11 +13,13 @@
     <None Remove="Views\Resurces\folding.svg" />
     <None Remove="Views\Resurces\Images\clock-history-svgrepo-com.svg" />
     <None Remove="Views\Resurces\Images\folder-svgrepo-com.svg" />
+    <None Remove="Views\Resurces\Images\globe-svgrepo-com.svg" />
     <None Remove="Views\Resurces\Images\home.svg" />
     <None Remove="Views\Resurces\Images\ServerIco.jpg" />
     <None Remove="Views\Resurces\Images\settings.svg" />
   </ItemGroup>
 
+  <!--
   <ItemGroup>
     <COMReference Include="{215d64d2-031c-33c7-96e3-61794cd1ee61}">
       <WrapperTool>tlbimp</WrapperTool>
@@ -26,7 +28,7 @@
       <Guid>215d64d2-031c-33c7-96e3-61794cd1ee61</Guid>
     </COMReference>
   </ItemGroup>
-
+  -->
   <ItemGroup>
     <PackageReference Include="CmlLib.Core" Version="4.0.5" />
     <PackageReference Include="CmlLib.Core.Installer.Forge" Version="1.1.0" />
@@ -47,6 +49,7 @@
     <Resource Include="Views\Resurces\Images\Exit.svg" />
     <Resource Include="Views\Resurces\Images\folder-svgrepo-com.svg" />
     <Resource Include="Views\Resurces\Images\folding.svg" />
+    <Resource Include="Views\Resurces\Images\globe-svgrepo-com.svg" />
     <Resource Include="Views\Resurces\Images\home.svg" />
     <Resource Include="Views\Resurces\Images\ServerIco.jpg" />
     <Resource Include="Views\Resurces\Images\settings.svg" />

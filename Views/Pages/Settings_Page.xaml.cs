@@ -21,6 +21,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using System.IO;
 using Microsoft.VisualBasic.Logging;
 using JasteeqCraft.Models;
+using JasteeqCraft.Core;
 
 
 namespace JasteeqCraft.Views.Pages
@@ -51,6 +52,19 @@ namespace JasteeqCraft.Views.Pages
 
             VramSlider.Maximum = totalMemory / (1024 * 1024);
             VramSlider.Value = ObjectJson.vRam;
+
+
+            // Установка начальной темы
+
+            switch (ObjectJson.Theme)
+            {
+                case "Dark":
+                    Dark.IsChecked = true;
+                    break;
+                case "Pink":
+                    Pink.IsChecked = true;
+                    break;
+            }
         }
 
         private void VramSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -94,6 +108,25 @@ namespace JasteeqCraft.Views.Pages
                 ObjectJson.minecraftPath = dlg.FileName;
                 jsonController.JsonSave(ObjectJson);
                 PatchLable.Text = $"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft";
+            }
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            var selectedRadio = sender as RadioButton;
+            if (selectedRadio != null)
+            {
+                string selectedTheme = selectedRadio.Name;
+
+                switch (selectedTheme)
+                {
+                    case "Dark":
+                        LauncherControl.SetTheme("Dark");
+                        break;
+                    case "Pink":
+                        LauncherControl.SetTheme("Pink");
+                        break;
+                }
             }
         }
     }
