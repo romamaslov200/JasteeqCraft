@@ -135,6 +135,8 @@ namespace JasteeqCraft.Views.Pages
         
         private async void LaunchButton_Click(object sender, RoutedEventArgs e)
         {
+            ObjectJson = jsonController.JsonStart();
+
             LaunchButton.IsEnabled = false;
             StatusText.Text = "Подготовка";
             ProgressBarDownload.Value = 0;

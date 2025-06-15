@@ -18,6 +18,9 @@ using System.Windows.Shapes;
 using WpfApp.Core;
 
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System.IO;
+using Microsoft.VisualBasic.Logging;
+using JasteeqCraft.Models;
 
 
 namespace JasteeqCraft.Views.Pages
@@ -66,6 +69,8 @@ namespace JasteeqCraft.Views.Pages
 
         private async void MinecraftPatch(object sender, RoutedEventArgs e)
         {
+            ObjectJson = jsonController.JsonStart();
+
             var dlg = new CommonOpenFileDialog
             {
                 IsFolderPicker = true,
@@ -75,6 +80,17 @@ namespace JasteeqCraft.Views.Pages
 
             if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
             {
+                try
+                {
+                    if (Directory.Exists($"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft") && $"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft" != $"{dlg.FileName}\\JasteeqCraftMincraft")
+                    {
+                        Directory.Delete($"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft", recursive: true);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    Logs.AddLog($"Error: {ex.Message}");
+                }
                 ObjectJson.minecraftPath = dlg.FileName;
                 jsonController.JsonSave(ObjectJson);
                 PatchLable.Text = $"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft";
