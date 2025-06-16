@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
+using WpfApp.Core;
 
 namespace JasteeqCraft.Core
 {
@@ -18,7 +19,8 @@ namespace JasteeqCraft.Core
     {
         public static WebClient WClient = new WebClient();
 
-
+        private static JsonController jsonController = new JsonController();
+        private static Json ObjectJson;
 
         public static async Task<string> CheckStatusAsync(string serverIp)
         {
@@ -73,22 +75,24 @@ namespace JasteeqCraft.Core
 
         public static async Task DownloadMinecraft(ProgressBar bar, TextBlock statusText = null)
         {
+            ObjectJson = jsonController.JsonStart();
+
             string user = "romamaslov200";
-            string repo = "MinecraftSborks";
+            string repo = "JasteeqCraftMincraft";
             string branch = "main";
 
             //string zipUrl = $"https://github.com/{user}/{repo}/archive/refs/heads/{branch}.zip";
             //string zipUrl = $"https://github.com/{user}/{repo}/archive/{branch}.zip";
             //string zipUrl = $"http://194.87.239.214/MinecraftSborks.zip";
-            string zipUrl = $"http://194.87.239.214/JasteeqCraft/minecraft/MinecraftSborks.zip";
+            string zipUrl = $"http://194.87.239.214/JasteeqCraft/minecraft/JasteeqCraftMincraft.zip";
 
 
             string zipFileName = $"{repo}.zip";
-            string extractPath = Directory.GetCurrentDirectory();
+            string extractPath = $"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft";
 
-            if (Directory.Exists($"{repo}"))
+            if (Directory.Exists($"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft"))
             {
-                Directory.Delete(repo, recursive: true);
+                Directory.Delete($"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft", recursive: true);
             }
 
 
@@ -96,11 +100,12 @@ namespace JasteeqCraft.Core
             using (var response = await httpClient.GetAsync(zipUrl, HttpCompletionOption.ResponseHeadersRead))
             {
                 var rs = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, zipUrl));
+                /*
                 if (rs.Content.Headers.ContentLength.HasValue)
                     MessageBox.Show("Размер файла: " + rs.Content.Headers.ContentLength.Value + " байт");
                 else
                     MessageBox.Show("Content-Length отсутствует!");
-
+                */
 
 
                 response.EnsureSuccessStatusCode();
@@ -175,7 +180,39 @@ namespace JasteeqCraft.Core
             }
         }
 
+        public static void SetTheme(string theme)
+        {
+            ObjectJson = jsonController.JsonStart();
 
+            var dict = new ResourceDictionary();
+
+            switch (theme)
+            {
+                case "Dark":
+                    dict.Source = new Uri("pack://application:,,,/Views/Styles/Themes/DarkTheme.xaml", UriKind.Absolute);
+                    ObjectJson.Theme = "Dark";
+                    jsonController.JsonSave(ObjectJson);
+                    break;
+                case "Pink":
+                    dict.Source = new Uri("pack://application:,,,/Views/Styles/Themes/PinkTheme.xaml", UriKind.Absolute);
+                    ObjectJson.Theme = "Pink";
+                    jsonController.JsonSave(ObjectJson);
+                    break;
+                default:
+                    dict.Source = new Uri("pack://application:,,,/Views/Styles/Themes/DarkTheme.xaml", UriKind.Absolute);
+                    break;
+            }
+
+            // Удаляем старую тему (если была)
+            var oldDict = Application.Current.Resources.MergedDictionaries
+                .FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Contains("Theme"));
+
+            if (oldDict != null)
+                Application.Current.Resources.MergedDictionaries.Remove(oldDict);
+
+            // Добавляем новую
+            Application.Current.Resources.MergedDictionaries.Add(dict);
+        }
 
 
     }

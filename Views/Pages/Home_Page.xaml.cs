@@ -4,6 +4,7 @@ using CmlLib.Core.Installer.Forge;
 using CmlLib.Core.ProcessBuilder;
 using JasteeqCraft.Core;
 using JasteeqCraft.Models;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -57,6 +58,21 @@ namespace JasteeqCraft.Views.Pages
             Nick.Text = ObjectJson.Nickname;
             PostLoad();
             UpdateServerStatus();
+            TotalMinutesLable_Loaded();
+        }
+
+        public void TotalMinutesLable_Loaded()
+        {
+            double totalMinutes = Math.Round(ObjectJson.TotalMinutesPlayed, 1);
+            
+            if (totalMinutes > 60)
+            {
+                TotalMinutesLable.Content = $"{Math.Round(ObjectJson.TotalMinutesPlayed/60, 1)} ч.";
+            }
+            else
+            {
+                TotalMinutesLable.Content = $"{Math.Round(ObjectJson.TotalMinutesPlayed, 1)} м.";
+            }
         }
 
         private async void UpdateServerStatus()
@@ -64,6 +80,10 @@ namespace JasteeqCraft.Views.Pages
             string serverIp = "54.37.238.70:25587";
             string status = await LauncherControl.CheckStatusAsync(serverIp);
             OnlineLable.Content = status;
+            
+            double width = this.ActualWidth;
+            double height = this.ActualHeight;
+            //MessageBox.Show($"width={width};\nheight={height}");
         }
 
         private async void PostLoad()
@@ -79,7 +99,7 @@ namespace JasteeqCraft.Views.Pages
 
                 if (lastPostWithPhoto == null)
                 {
-                    MessageBox.Show("Не найдено постов с фотографиями", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //MessageBox.Show("Не найдено постов с фотографиями", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             finally
@@ -119,6 +139,8 @@ namespace JasteeqCraft.Views.Pages
         
         private async void LaunchButton_Click(object sender, RoutedEventArgs e)
         {
+            ObjectJson = jsonController.JsonStart();
+
             LaunchButton.IsEnabled = false;
             StatusText.Text = "Подготовка";
             ProgressBarDownload.Value = 0;
@@ -127,10 +149,11 @@ namespace JasteeqCraft.Views.Pages
             {
                 string verPatch = await LauncherControl.GetMinecraftVersion();
                 ObjectJson = jsonController.JsonStart();
-                MessageBox.Show(verPatch);
-                MessageBox.Show($"Версия Minecraft на сервере: {verPatch}\nВерсия Minecraft на устройстве: {ObjectJson.minecraftVersionPatch}");
-
-                if (verPatch != ObjectJson.minecraftVersionPatch)
+                //MessageBox.Show(verPatch);
+                //MessageBox.Show($"Версия Minecraft на сервере: {verPatch}\nВерсия Minecraft на устройстве: {ObjectJson.minecraftVersionPatch}");
+                //MessageBox.Show($"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft");
+                //MessageBox.Show(Directory.Exists($"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft").ToString());
+                if (verPatch != ObjectJson.minecraftVersionPatch || !Directory.Exists($"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft"))
                 {
                     await LauncherControl.DownloadMinecraft(ProgressBarDownload, StatusText);
 
@@ -140,7 +163,7 @@ namespace JasteeqCraft.Views.Pages
                     ObjectJson.minecraftVersionPatch = verPatch;
                     jsonController.JsonSave(ObjectJson);
                 }
-                var path = new MinecraftPath(Path.Combine(Directory.GetCurrentDirectory(), "MinecraftSborks"));
+                var path = new MinecraftPath(Path.Combine(ObjectJson.minecraftPath, "JasteeqCraftMincraft"));
 
                 //var path = new MinecraftPath(Path.Combine(Directory.GetCurrentDirectory(), "MinecraftSborks-main"));
                 //MessageBox.Show(path.Versions);
@@ -178,11 +201,20 @@ namespace JasteeqCraft.Views.Pages
 
                 //StatusText.Text = $"Запущен Minecraft {forgeVersion.Name}";
                 StatusText.Text = $"Запуск";
+
+                DateTime startTime = DateTime.Now;
+                await process.WaitForExitAsync(); // Exit Jdom
+                DateTime endTime = DateTime.Now;
+
+                TimeSpan playedTime = endTime - startTime;
+
+                SavePlayedTimeToFile(Nick.Text, playedTime);
             }
             catch (Exception ex)
             {
                 StatusText.Text = "Ошибка при запуске!";
                 MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                Logs.AddLog($"{ex.Message}");
             }
             finally
             {
@@ -195,5 +227,17 @@ namespace JasteeqCraft.Views.Pages
             ObjectJson.Nickname = Nick.Text;
             jsonController.JsonSave(ObjectJson);
         }
+
+        void SavePlayedTimeToFile(string nickname, TimeSpan sessionTime)
+        {
+            double totalMinutes = ObjectJson.TotalMinutesPlayed;
+
+            totalMinutes += sessionTime.TotalMinutes;
+
+            ObjectJson.TotalMinutesPlayed = totalMinutes;
+            jsonController.JsonSave(ObjectJson);
+            TotalMinutesLable_Loaded();
+        }
+
     }
 }

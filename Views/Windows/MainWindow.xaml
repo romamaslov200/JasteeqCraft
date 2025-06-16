@@ -17,11 +17,6 @@
         
         
         
-        MinHeight="450"
-        MinWidth="800"
-
-        MaxHeight="450"
-        MaxWidth="800"
         
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
@@ -29,15 +24,44 @@
     
     <Border>
         <Grid>
-            <Border Background="#292a29" Height="30"
+            <Border Height="450"
                     VerticalAlignment="Top"
-                    BorderThickness="0,0,0,1"
+                    BorderThickness="1,1,1,1"
                     BorderBrush="#fff"
-                    CornerRadius="20, 20, 0, 0"/>
+                    CornerRadius="20, 20, 20, 20">
+                <Border.Background>
+                    <RadialGradientBrush 
+                        Center="0.5,0.5" 
+                        GradientOrigin="0.5,0.5" 
+                        RadiusX="1" 
+                        RadiusY="1">
+
+                        <GradientStop Color="{DynamicResource App_Bg_GradientCenterColor}" Offset="0.0"/>
+                        <!-- Центр -->
+                        <GradientStop Color="{DynamicResource App_Bg__GradientEdgeColor}" Offset="1.0"/>
+                        <!-- Края -->
+                    </RadialGradientBrush>
+                </Border.Background>
+            </Border>
             <Grid Height="30" VerticalAlignment="Top">
+                <Border BorderThickness="1,1,1,0.9"
+                        CornerRadius="20, 20, 0, 0"
+                        BorderBrush="#fff">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0"
+                                             EndPoint="0,1">
+
+
+                            <GradientStop Color="{DynamicResource App_Bg_GradientCenterColor}" Offset="0.0"/>
+                            <!-- Центр -->
+                            <GradientStop Color="{DynamicResource App_Bg__GradientEdgeColor}" Offset="1.0"/>
+                            <!-- Края -->
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
                 <Button
                     Style="{DynamicResource BtnNav}"
-                    Margin= "0, 0, 10, 0"
+                    Margin= "0, 0, 15, 0"
                     Background="#0000"
                     BorderBrush="#0000"
                     Width="15"
@@ -55,7 +79,7 @@
 
                 <Button
                     Style="{DynamicResource BtnNav}"
-                    Margin= "0, 0, 30, 0"
+                    Margin= "0, 0, 40, 0"
                     Background="#0000"
                     BorderBrush="#0000"
                     Cursor="Hand"
@@ -75,72 +99,124 @@
 
             <Grid Margin="0,30,0,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="70"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Border Background="#292a29"
-                        BorderThickness="0,0,1,0"
-                        BorderBrush="#fff">
-                    
-                    <StackPanel Cursor=""
-                                
-                                HorizontalAlignment="Center"
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="380"/>
+                </Grid.RowDefinitions>
+                <Border BorderThickness="1,0,1,0"
+                        BorderBrush="#fff"
+                        Padding="3">
+                    <Border.Background>
+                        <RadialGradientBrush 
+                        Center="0.5,0.5" 
+                        GradientOrigin="0.5,0.5" 
+                        RadiusX="0.9" 
+                        RadiusY="0.9">
+
+                            <GradientStop Color="{DynamicResource Menu_Bg_Gradient1}" Offset="0.0"/>
+                            <!-- Центр -->
+                            <GradientStop Color="{DynamicResource Menu_Bg__Gradient2}" Offset="0.95"/>
+                            <!-- Края -->
+                        </RadialGradientBrush>
+                    </Border.Background>
+
+                    <StackPanel Margin="0,0,15,0"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right"
                                 VerticalAlignment="Center">
-                        <Border Background="#3b3b3b"
-                                Margin="0,0,0,20"
-                                Width="50"
-                                Height="50"
-                                CornerRadius="30, 30, 30, 30"
-                                BorderThickness="2,2,2,2"
+                        
+                        <Border CornerRadius="15, 15, 15, 15"
+                                Margin="0,0,10,0"
+                                Padding="2"
                                 BorderBrush="#fff" Cursor="">
-                            <Button
-                                Style="{DynamicResource BtnNav}"
-                                Margin= "0, 0, 0, 0"
-                                Background="#0000"
-                                BorderBrush="#0000"
-                                Width="30"
-                                Height="30"
-                                Cursor="Hand"
-                                Click="Button_PageHome_Click"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center">
-                                <svgc:SvgViewbox Margin="0, 0, 0, 0"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Source="pack://application:,,,/Views/Resurces/Images/Home.svg">
-                                </svgc:SvgViewbox>
+
+                                <Button Padding="10,0,0,0"
+                                        Style="{DynamicResource BtnNav}"
+                                        Margin= "0, 0, 0, 0"
+            
+                                        Background="#0000"
+                                        BorderBrush="#0000"
+                                        Cursor="Hand"
+                                        Click="Button_WebSite_Click"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal">
+                                        <svgc:SvgViewbox Margin="0, 0, 0, 0"
+                                                     Width="15"
+                                                     VerticalAlignment="Center"
+                                                     HorizontalAlignment="Center"
+                                                     Source="pack://application:,,,/Views/Resurces/Images/globe-svgrepo-com.svg" Cursor="">
+                                        </svgc:SvgViewbox>
+                                        <Label Content="Сайт"
+                                               Foreground="#fff"
+                                               VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                            </Border>
+                        
+                        
+                        <Border CornerRadius="15, 15, 15, 15"
+                            Margin="0,0,10,0"
+                            Padding="2"
+                            BorderBrush="#fff" Cursor="">
+
+                            <Button Padding="10,0,0,0"
+                                    Style="{DynamicResource BtnNav}"
+                                    Margin= "0, 0, 0, 0"
+            
+                                    Background="#0000"
+                                    BorderBrush="#0000"
+                                    Cursor="Hand"
+                                    Click="Button_PageHome_Click"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <svgc:SvgViewbox Margin="0, 0, 0, 0"
+                                                 Width="15"
+                                                 VerticalAlignment="Center"
+                                                 HorizontalAlignment="Center"
+                                                 Source="pack://application:,,,/Views/Resurces/Images/Home.svg" Cursor="">
+                                    </svgc:SvgViewbox>
+                                    <Label Content="Главная"
+                                           Foreground="#fff"
+                                           VerticalAlignment="Center"/>
+                                </StackPanel>
                             </Button>
                         </Border>
-
-                        <Border Background="#3b3b3b"
-                                Width="50"
-                                Height="50"
-                                CornerRadius="30, 30, 30, 30"
-                                BorderThickness="2,2,2,2"
+                        <Border CornerRadius="15, 15, 15, 15"
+                                Padding="2"
                                 BorderBrush="#fff" Cursor="">
-                            <Button
-                                Style="{DynamicResource BtnNav}"
-                                Margin= "0, 0, 0, 0"
-                                Background="#0000"
-                                BorderBrush="#0000"
-                                Width="25"
-                                Height="25"
-                                Cursor="Hand"
-                                Click="Button_PageSettings_Click"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center">
-                                <svgc:SvgViewbox Margin="0, 0, 0, 0"
-                                VerticalAlignment="Center"
-                                 HorizontalAlignment="Center"
-                                Source="pack://application:,,,/Views/Resurces/Images/settings.svg">
-                                </svgc:SvgViewbox>
+                            <Button Padding="10,0,0,0"
+                                    Style="{DynamicResource BtnNav}"
+                                    Margin= "0, 0, 0, 0"
+                                    
+                                    Background="#0000"
+                                    BorderBrush="#0000"
+                                    Cursor="Hand"
+                                    Click="Button_PageSettings_Click"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                        <svgc:SvgViewbox Margin="0, 0, 0, 0"
+                                                 Width="15"
+                                                 VerticalAlignment="Center"
+                                                 HorizontalAlignment="Center"
+                                                 Source="pack://application:,,,/Views/Resurces/Images/settings.svg" Cursor="">
+                                        </svgc:SvgViewbox>
+                                        <Label Content="Настройки"
+                                           Foreground="#fff"
+                                           VerticalAlignment="Center"/>
+                                    </StackPanel>
                             </Button>
                         </Border>
                     </StackPanel>
                 </Border>
 
                 <Frame x:Name="MainFrame"
-                       Grid.Column="1"
+                       Grid.Column="0"
+                       Grid.Row="1"
                        NavigationUIVisibility="Hidden"
                        Source=""
                        Navigated="MainFrame_Navigated"

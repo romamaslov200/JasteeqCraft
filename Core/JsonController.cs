@@ -1,4 +1,56 @@
 ﻿using System;
+using Microsoft.Win32;
+
+namespace WpfApp.Core
+{
+    class JsonController
+    {
+        public const string RegistryRoot = @"SOFTWARE\JasteeqCraft";
+
+        public Json JsonStart()
+        {
+            var json = new Json();
+
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(RegistryRoot))
+            {
+                if (key != null)
+                {
+                    json.minecraftPath = key.GetValue("minecraftPath", json.minecraftPath)?.ToString();
+
+                    json.minecraftVersionPatch = key.GetValue("MinecraftVersionPatch", json.minecraftVersionPatch)?.ToString();
+                    json.launcherVersionPatch = key.GetValue("LauncherVersionPatch", json.launcherVersionPatch)?.ToString();
+                    json.vRam = Convert.ToInt32(key.GetValue("VRam", json.vRam));
+                    json.Nickname = key.GetValue("Nickname", json.Nickname)?.ToString();
+                    json.TotalMinutesPlayed = Convert.ToDouble(key.GetValue("TotalMinutesPlayed", json.TotalMinutesPlayed));
+
+                    json.Theme = key.GetValue("Theme", json.Theme)?.ToString();
+                }
+            }
+
+            return json;
+        }
+
+        public void JsonSave(Json json)
+        {
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(RegistryRoot))
+            {
+                key.SetValue("minecraftPath", json.minecraftPath);
+
+
+                key.SetValue("MinecraftVersionPatch", json.minecraftVersionPatch);
+                key.SetValue("LauncherVersionPatch", json.launcherVersionPatch);
+                key.SetValue("VRam", json.vRam);
+                key.SetValue("Nickname", json.Nickname);
+                key.SetValue("TotalMinutesPlayed", json.TotalMinutesPlayed);
+
+                key.SetValue("Theme", json.Theme);
+            }
+        }
+    }
+}
+
+/*
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,3 +81,4 @@ namespace WpfApp.Core
         }
     }
 }
+*/

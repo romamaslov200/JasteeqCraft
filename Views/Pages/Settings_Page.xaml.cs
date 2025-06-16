@@ -17,6 +17,13 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfApp.Core;
 
+using Microsoft.WindowsAPICodePack.Dialogs;
+using System.IO;
+using Microsoft.VisualBasic.Logging;
+using JasteeqCraft.Models;
+using JasteeqCraft.Core;
+
+
 namespace JasteeqCraft.Views.Pages
 {
     /// <summary>
@@ -33,7 +40,7 @@ namespace JasteeqCraft.Views.Pages
             ObjectJson = jsonController.JsonStart();
             this.KeepAlive = true; // Типо для сохранения состояния страници но работает и без этого
 
-
+            PatchLable.Text = $"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft";
             Vram_Lable.Content = $"Оперативная память: {ObjectJson.vRam} MB";
 
             ulong totalMemory = 0;
@@ -45,6 +52,19 @@ namespace JasteeqCraft.Views.Pages
 
             VramSlider.Maximum = totalMemory / (1024 * 1024);
             VramSlider.Value = ObjectJson.vRam;
+
+
+            // Установка начальной темы
+
+            switch (ObjectJson.Theme)
+            {
+                case "Dark":
+                    Dark.IsChecked = true;
+                    break;
+                case "Pink":
+                    Pink.IsChecked = true;
+                    break;
+            }
         }
 
         private void VramSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -61,5 +81,53 @@ namespace JasteeqCraft.Views.Pages
             jsonController.JsonSave(ObjectJson);
         }
 
+        private async void MinecraftPatch(object sender, RoutedEventArgs e)
+        {
+            ObjectJson = jsonController.JsonStart();
+
+            var dlg = new CommonOpenFileDialog
+            {
+                IsFolderPicker = true,
+                Title = "Выберите папку",
+                InitialDirectory = ObjectJson.minecraftPath
+            };
+
+            if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                try
+                {
+                    if (Directory.Exists($"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft") && $"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft" != $"{dlg.FileName}\\JasteeqCraftMincraft")
+                    {
+                        Directory.Delete($"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft", recursive: true);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    Logs.AddLog($"Error: {ex.Message}");
+                }
+                ObjectJson.minecraftPath = dlg.FileName;
+                jsonController.JsonSave(ObjectJson);
+                PatchLable.Text = $"{ObjectJson.minecraftPath}\\JasteeqCraftMincraft";
+            }
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            var selectedRadio = sender as RadioButton;
+            if (selectedRadio != null)
+            {
+                string selectedTheme = selectedRadio.Name;
+
+                switch (selectedTheme)
+                {
+                    case "Dark":
+                        LauncherControl.SetTheme("Dark");
+                        break;
+                    case "Pink":
+                        LauncherControl.SetTheme("Pink");
+                        break;
+                }
+            }
+        }
     }
 }

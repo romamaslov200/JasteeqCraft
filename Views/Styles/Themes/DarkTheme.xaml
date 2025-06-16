@@ -1,0 +1,97 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Фон градиента карточки сервера -->
+    <Color x:Key="Server_GradientCenterColor">#171717</Color>
+    <Color x:Key="Server_GradientEdgeColor">#484848</Color>
+
+
+
+    <!-- Фон градиента приложения -->
+    <Color x:Key="App_Bg_GradientCenterColor">#414141</Color>
+    <Color x:Key="App_Bg__GradientEdgeColor">#171717</Color>
+
+
+
+
+    <!-- Фон Меню приложения -->
+    <Color x:Key="Menu_Bg_Gradient1">#171717</Color>
+    <Color x:Key="Menu_Bg__Gradient2">#2A2A2A</Color>
+
+
+
+    <!-- Кнопка -->
+    <Style x:Key="MainButton" TargetType="Button">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Padding" Value="10,5"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="10" BorderBrush="White" BorderThickness="2">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="#2A2A2A" Offset="0.0"/>
+                                <!-- Верх -->
+                                <GradientStop Color="#2A2A2A" Offset="1.0"/>
+                                <!-- Низ -->
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!-- Полу ввода -->
+    <Style x:Key="MainTextBox" TargetType="TextBox">
+        <Setter Property="Foreground" Value="#fff"/>
+        <Setter Property="Padding" Value="2"/>
+        <Setter Property="BorderBrush" Value="Gray"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="border"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="6"
+                    SnapsToDevicePixels="True">
+                        <ScrollViewer x:Name="PART_ContentHost"
+                              Margin="0"
+                              Focusable="False"/>
+                        <Border.Background>
+                            <RadialGradientBrush Center="0.5,0.5" 
+                                            GradientOrigin="0.5,0.5" 
+                                            RadiusX="1" 
+                                            RadiusY="1">
+                                <GradientStop Color="#2C2C2C" Offset="0.0"/>
+                                <!-- Верх -->
+                                <GradientStop Color="#2C2C2C" Offset="1.0"/>
+                                <!-- Низ -->
+                            </RadialGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="#0078D7"/>
+                            <Setter TargetName="border" Property="BorderThickness" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="#888888"/>
+                            <Setter TargetName="border" Property="Background" Value="#EEE"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    
+    
+</ResourceDictionary>
