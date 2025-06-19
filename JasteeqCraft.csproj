@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>ServerIco.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +18,10 @@
     <None Remove="Views\Resurces\Images\home.svg" />
     <None Remove="Views\Resurces\Images\ServerIco.jpg" />
     <None Remove="Views\Resurces\Images\settings.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ServerIco.ico" />
   </ItemGroup>
 
   <!--
@@ -53,10 +58,6 @@
     <Resource Include="Views\Resurces\Images\home.svg" />
     <Resource Include="Views\Resurces\Images\ServerIco.jpg" />
     <Resource Include="Views\Resurces\Images\settings.svg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>

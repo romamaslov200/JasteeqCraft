@@ -34,6 +34,9 @@ namespace JasteeqCraft.Views.Pages
         private JsonController jsonController = new JsonController();
         private Json ObjectJson;
 
+        public List<string> NickNameList { get; set; }
+
+
         public Settings_Page()
         {
             InitializeComponent();
@@ -65,6 +68,13 @@ namespace JasteeqCraft.Views.Pages
                     Pink.IsChecked = true;
                     break;
             }
+
+            // Загруска ников
+            NickNameList = new List<string>
+            {
+                "Вариант 1", "Вариант 2", "Вариант 3", "Вариант 4", "Вариант 5"
+            };
+            this.DataContext = this;
         }
 
         private void VramSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -124,6 +134,25 @@ namespace JasteeqCraft.Views.Pages
                         LauncherControl.SetTheme("Dark");
                         break;
                     case "Pink":
+                        LauncherControl.SetTheme("Pink");
+                        break;
+                }
+            }
+        }
+
+        private void NickType_RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            var selectedRadio = sender as RadioButton;
+            if (selectedRadio != null)
+            {
+                string selectedTheme = selectedRadio.Name;
+
+                switch (selectedTheme)
+                {
+                    case "Microsoft":
+                        LauncherControl.SetTheme("Dark");
+                        break;
+                    case "Обычный":
                         LauncherControl.SetTheme("Pink");
                         break;
                 }

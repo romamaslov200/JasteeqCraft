@@ -19,7 +19,9 @@
         
         
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize"
+        ResizeMode="CanResize"
+        MaxHeight="1000"
+        MaxWidth="1000"
         Title="MainWindow" Height="450" Width="800">
     
     <Border>

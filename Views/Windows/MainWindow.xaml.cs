@@ -7,6 +7,10 @@ using JasteeqCraft.Views.Pages;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,6 +32,38 @@ namespace JasteeqCraft
         {
             ObjectJson = jsonController.JsonStart();
             LauncherControl.SetTheme(ObjectJson.Theme);
+
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://195.133.88.43");
+                request.Timeout = 5000; // таймаут 5 секунд
+                request.Method = "GET";
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    if ((int)response.StatusCode >= 200 && (int)response.StatusCode < 400)
+                    {
+                        // Сайт доступен
+                        //MessageBox.Show("Сайт доступен.");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Сервер обновлений не доступен");
+                        Environment.Exit(0);
+                    }
+                }
+            }
+            catch (WebException ex)
+            {
+                MessageBox.Show($"Сервер обновлений не доступен");
+                Environment.Exit(0);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Сервер обновлений не доступен");
+                Environment.Exit(0);
+            }
+
             InitializeComponent();
 
             NavArcCore.MainWindow = this;

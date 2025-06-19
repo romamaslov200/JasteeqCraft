@@ -9,7 +9,7 @@ using System.Windows.Media.Media3D;
 
 namespace WpfApp.Core
 {
-    class Json
+    public class Json
     {
         public string minecraftPath { get; set; } = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}";
 
@@ -18,7 +18,8 @@ namespace WpfApp.Core
 
         public int vRam { get; set; } = 2000;
 
-        public string Nickname { get; set; } = "Nickname";
+        public string Nickname { get; set; }
+        public string[] NicknameList { get; set; }
 
         public double TotalMinutesPlayed { get; set; } = 0;
 

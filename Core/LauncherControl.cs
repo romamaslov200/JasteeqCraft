@@ -57,7 +57,7 @@ namespace JasteeqCraft.Core
         public static async Task<string> GetMinecraftVersion()
         {
             //string url = "https://raw.githubusercontent.com/romamaslov200/MinecraftSborks/refs/heads/main/minecraftVersionPatch.text";
-            string url = "http://194.87.239.214/JasteeqCraft/minecraft/minecraftVersionPatch.txt";
+            string url = "http://195.133.88.43/JasteeqCraft/minecraft/minecraftVersionPatch.txt";
 
             using (HttpClient client = new HttpClient())
             {
@@ -84,7 +84,7 @@ namespace JasteeqCraft.Core
             //string zipUrl = $"https://github.com/{user}/{repo}/archive/refs/heads/{branch}.zip";
             //string zipUrl = $"https://github.com/{user}/{repo}/archive/{branch}.zip";
             //string zipUrl = $"http://194.87.239.214/MinecraftSborks.zip";
-            string zipUrl = $"http://194.87.239.214/JasteeqCraft/minecraft/JasteeqCraftMincraft.zip";
+            string zipUrl = $"http://195.133.88.43/JasteeqCraft/minecraft/JasteeqCraftMincraft.zip";
 
 
             string zipFileName = $"{repo}.zip";

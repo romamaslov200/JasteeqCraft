@@ -1,5 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--SelectTypeNick-->
+    <SolidColorBrush x:Key="SelectTypeNick" Color="#74003C"/>
+    
+    <!--Card-->
+    <SolidColorBrush x:Key="CardBg" Color="#9A2757"/>
+    
     <!-- Фон градиента карточки сервера -->
     <Color x:Key="Server_GradientCenterColor">#D73F91</Color>
     <Color x:Key="Server_GradientEdgeColor">#E42D27</Color>

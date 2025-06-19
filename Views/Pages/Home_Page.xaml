@@ -242,7 +242,7 @@
                     <TextBlock Grid.Column="2"
                                Text=""
                                Foreground="#fff"
-                               FontSize="16"
+                               FontSize="12"
                                Name="StatusText"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Right"/>

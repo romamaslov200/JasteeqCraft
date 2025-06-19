@@ -21,6 +21,10 @@ namespace WpfApp.Core
                     json.launcherVersionPatch = key.GetValue("LauncherVersionPatch", json.launcherVersionPatch)?.ToString();
                     json.vRam = Convert.ToInt32(key.GetValue("VRam", json.vRam));
                     json.Nickname = key.GetValue("Nickname", json.Nickname)?.ToString();
+
+                    var nickListRaw = key.GetValue("NicknameList", "")?.ToString();
+                    json.NicknameList = nickListRaw?.Split(';', StringSplitOptions.RemoveEmptyEntries);
+                    
                     json.TotalMinutesPlayed = Convert.ToDouble(key.GetValue("TotalMinutesPlayed", json.TotalMinutesPlayed));
 
                     json.Theme = key.GetValue("Theme", json.Theme)?.ToString();
@@ -41,6 +45,7 @@ namespace WpfApp.Core
                 key.SetValue("LauncherVersionPatch", json.launcherVersionPatch);
                 key.SetValue("VRam", json.vRam);
                 key.SetValue("Nickname", json.Nickname);
+                key.SetValue("NicknameList", string.Join(";", json.NicknameList ?? new string[0]));
                 key.SetValue("TotalMinutesPlayed", json.TotalMinutesPlayed);
 
                 key.SetValue("Theme", json.Theme);
