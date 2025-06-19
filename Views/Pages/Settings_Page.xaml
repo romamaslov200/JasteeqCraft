@@ -52,6 +52,7 @@
                                                      Foreground="#fff"
                                                      Margin="1"
                                                      GroupName="NickNameRadio"
+                                                     Checked="NickRadioButton_Checked"
                                                      HorizontalAlignment="Center">
                                                 <RadioButton.Template>
                                                     <ControlTemplate TargetType="RadioButton">
@@ -82,19 +83,29 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <Button Content="+"
+                                        Name="AccaundAddButton"
                                         Height="30"
                                         Grid.Column="0"
-                                        Style="{DynamicResource MainButton}"
+                                        Style="{DynamicResource MainButton}" Click="AccaundAddButton_Click"
                                         />
                                 <Button Content="-" 
                                         Height="30"
                                         Style="{DynamicResource MainButton}"
+                                        Click="AccaundRemoveButton_Click"
                                         Grid.Column="1"/>
                             </Grid>
+                            <TextBox Height="30"
+                                     VerticalContentAlignment="Center"
+                                     Style="{DynamicResource MainTextBox}"
+                                     Name="TextBox_AddNick"
+                                     Margin="10,10,10,0"
+                                     Cursor=""
+                                     />
                             <StackPanel Orientation="Horizontal"
                                         HorizontalAlignment="Center"
-                                        Margin="0,10,0,10">
-                                <RadioButton Content="Microsoft"
+                                        Margin="0,2,0,10">
+                                <RadioButton Name="Microsoft"
+                                             Content="Microsoft"
                                              Foreground="#fff"
                                              Margin="0"
                                              FontSize="10"
@@ -124,6 +135,7 @@
                                     </RadioButton.Template>
                                 </RadioButton>
                                 <RadioButton Grid.Column="1"
+                                             Name="Обычный"
                                              Content="Обычный"
                                              Foreground="#fff"
                                              Margin="0"

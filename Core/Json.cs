@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ namespace WpfApp.Core
 
         public string Nickname { get; set; }
         public string[] NicknameList { get; set; }
+        //public ObservableCollection<string> NickNameList { get; set; }
 
         public double TotalMinutesPlayed { get; set; } = 0;
 

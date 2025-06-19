@@ -120,7 +120,7 @@ namespace JasteeqCraft
         {
             Process.Start(new ProcessStartInfo
             {
-                FileName = "http://194.87.239.214/1/",
+                FileName = "http://195.133.88.43/1/",
                 UseShellExecute = true
             });
         }
