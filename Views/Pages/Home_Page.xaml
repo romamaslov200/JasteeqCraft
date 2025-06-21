@@ -9,7 +9,7 @@
       xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
       
       
-      d:DesignHeight="380" d:DesignWidth="800"
+      d:DesignHeight="430" d:DesignWidth="800"
       
       
       Title="Главная">
@@ -48,7 +48,7 @@
     <Border>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="300"/>
+                <RowDefinition Height="350"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
@@ -156,13 +156,13 @@
                                                            Margin="0,5">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
-                                                        <Grid Width="500" Margin="0,0,0,0" Height="250">
+                                                        <Grid Width="500" Margin="0,0,0,0" Height="300">
                                                             <Rectangle RadiusX="20" RadiusY="20"/>
                                                             <Image Source="{Binding}"
                                                                    Stretch="UniformToFill"
-                                                                   Width="500" Height="250">
+                                                                   Width="500" Height="300">
                                                                 <Image.Clip>
-                                                                    <RectangleGeometry Rect="0,0,500,250"
+                                                                    <RectangleGeometry Rect="0,0,500,300"
                                                                                        RadiusX="10"
                                                                                        RadiusY="10"/>
                                                                 </Image.Clip>

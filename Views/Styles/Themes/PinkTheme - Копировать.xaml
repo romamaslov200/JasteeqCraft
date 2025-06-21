@@ -4,7 +4,7 @@
     <SolidColorBrush x:Key="SelectTypeNick" Color="#74003C"/>
     
     <!--Card-->
-    <SolidColorBrush x:Key="CardBg" Color="#2C1B23"/>
+    <SolidColorBrush x:Key="CardBg" Color="#9A2757"/>
     
     <!-- Фон градиента карточки сервера -->
     <Color x:Key="Server_GradientCenterColor">#D73F91</Color>
@@ -13,15 +13,15 @@
 
 
     <!-- Фон градиента приложения -->
-    <Color x:Key="App_Bg_GradientCenterColor">#1D1016</Color>
+    <Color x:Key="App_Bg_GradientCenterColor">#D73F91</Color>
     <Color x:Key="App_Bg__GradientEdgeColor">#74003C</Color>
 
 
 
 
     <!-- Фон Меню приложения -->
-    <Color x:Key="Menu_Bg_Gradient1">#D34792</Color>
-    <Color x:Key="Menu_Bg__Gradient2">#1D1016</Color>
+    <Color x:Key="Menu_Bg_Gradient1">#D73F91</Color>
+    <Color x:Key="Menu_Bg__Gradient2">#9A2757</Color>
 
 
 
@@ -39,9 +39,9 @@
                     <Border CornerRadius="10" BorderBrush="White" BorderThickness="2">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <GradientStop Color="#B6809C" Offset="0.0"/>
+                                <GradientStop Color="#FF6A00" Offset="0.0"/>
                                 <!-- Верх -->
-                                <GradientStop Color="#A5537F" Offset="1.0"/>
+                                <GradientStop Color="#FF0084" Offset="1.0"/>
                                 <!-- Низ -->
                             </LinearGradientBrush>
                         </Border.Background>
@@ -76,9 +76,9 @@
                                             GradientOrigin="0.5,0.5" 
                                             RadiusX="1" 
                                             RadiusY="1">
-                                <GradientStop Color="#B6809C" Offset="0.0"/>
+                                <GradientStop Color="#CA5400" Offset="0.0"/>
                                 <!-- Верх -->
-                                <GradientStop Color="#A5537F" Offset="1.0"/>
+                                <GradientStop Color="#A60056" Offset="1.0"/>
                                 <!-- Низ -->
                             </RadialGradientBrush>
                         </Border.Background>

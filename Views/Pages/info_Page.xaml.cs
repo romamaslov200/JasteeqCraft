@@ -38,7 +38,7 @@ namespace JasteeqCraft.Views.Pages
             try
             {
                 var parser = new TelegramParser();
-                var posts = await parser.ParseLastPostsWithPhotos("testanall");
+                var posts = await parser.ParseLastPostsWithPhotos("jasteeq");
 
                 if (posts.Count == 0)
                 {
@@ -46,7 +46,12 @@ namespace JasteeqCraft.Views.Pages
                 }
                 else
                 {
-                    foreach (var post in posts)
+                    var uniquePosts = posts
+                        .GroupBy(p => p.Id)
+                        .Select(g => g.First())
+                        .ToList();
+
+                    foreach (var post in uniquePosts)
                         TelegramPosts.Add(post);
                 }
             }

@@ -16,7 +16,7 @@
     <None Remove="Views\Resurces\Images\folder-svgrepo-com.svg" />
     <None Remove="Views\Resurces\Images\globe-svgrepo-com.svg" />
     <None Remove="Views\Resurces\Images\home.svg" />
-    <None Remove="Views\Resurces\Images\ServerIco.jpg" />
+    <None Remove="Views\Resurces\Images\info.svg" />
     <None Remove="Views\Resurces\Images\settings.svg" />
   </ItemGroup>
 
@@ -57,7 +57,9 @@
     <Resource Include="Views\Resurces\Images\folding.svg" />
     <Resource Include="Views\Resurces\Images\globe-svgrepo-com.svg" />
     <Resource Include="Views\Resurces\Images\home.svg" />
+    <Resource Include="Views\Resurces\Images\info.svg" />
     <Resource Include="Views\Resurces\Images\ServerIco.jpg" />
+    <Resource Include="Views\Resurces\Images\ServerIco2.jpg" />
     <Resource Include="Views\Resurces\Images\settings.svg" />
   </ItemGroup>
 

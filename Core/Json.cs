@@ -15,7 +15,7 @@ namespace WpfApp.Core
         public string minecraftPath { get; set; } = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}";
 
         public string minecraftVersionPatch { get; set; } = "";
-        public string launcherVersionPatch { get; set; } = "0.1";
+        public string launcherVersionPatch { get; set; } = "0.2";
 
         public int vRam { get; set; } = 2000;
 

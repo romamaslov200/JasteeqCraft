@@ -2,14 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace JasteeqCraft.Models
 {
     public class TelegramPost
     {
+        public string Id => $"{Date}-{Text?.GetHashCode()}";
         public string Date { get; set; }
         public string Text { get; set; }
         public string Views { get; set; }
@@ -25,7 +28,7 @@ namespace JasteeqCraft.Models
 
 
 
-        public async Task<List<TelegramPost>> ParseLastPostsWithPhotos(string channelName, int count = 5)
+        public async Task<List<TelegramPost>> ParseLastPostsWithPhotos(string channelName, int count = 100)
         {
             var url = $"{BaseUrl}{channelName}";
             var postsList = new List<TelegramPost>();
@@ -35,6 +38,12 @@ namespace JasteeqCraft.Models
                 var html = await _httpClient.GetStringAsync(url);
                 var doc = new HtmlDocument();
                 doc.LoadHtml(html);
+                /*
+                var allPosts = doc.DocumentNode.SelectNodes("//div[contains(@class, 'tgme_widget_message')]");
+                MessageBox.Show($"Всего постов найдено: {allPosts?.Count ?? 0}");
+                var photoPosts = allPosts?.Where(node => node.SelectSingleNode(".//a[contains(@class, 'tgme_widget_message_photo_wrap')]") != null).ToList();
+                MessageBox.Show($"Постов с фото: {photoPosts?.Count ?? 0}");
+                */
 
                 var postsWithPhotos = doc.DocumentNode
                     .SelectNodes("//div[contains(@class, 'tgme_widget_message')][.//a[contains(@class, 'tgme_widget_message_photo_wrap')]]")?
@@ -46,10 +55,12 @@ namespace JasteeqCraft.Models
 
                 foreach (var node in postsWithPhotos)
                 {
+                    var textNode = node.SelectSingleNode(".//div[contains(@class, 'tgme_widget_message_text')]");
+
                     var post = new TelegramPost
                     {
                         Date = node.SelectSingleNode(".//time[@datetime]")?.GetAttributeValue("datetime", ""),
-                        Text = node.SelectSingleNode(".//div[contains(@class, 'tgme_widget_message_text')]")?.InnerText.Trim(),
+                        Text = GetFullText(textNode)?.Trim(),
                         Views = node.SelectSingleNode(".//span[contains(@class, 'tgme_widget_message_views')]")?.InnerText
                     };
 
@@ -77,7 +88,33 @@ namespace JasteeqCraft.Models
             }
         }
 
+        private string GetFullText(HtmlNode node)
+        {
+            if (node == null)
+                return string.Empty;
 
+            var sb = new StringBuilder();
+
+            foreach (var child in node.ChildNodes)
+            {
+                if (child.Name == "br")
+                {
+                    sb.AppendLine();
+                }
+                else if (child.NodeType == HtmlNodeType.Text)
+                {
+                    // Добавляем текст, декодируя HTML сущности (например, &amp; → &)
+                    sb.Append(WebUtility.HtmlDecode(child.InnerText));
+                }
+                else
+                {
+                    // Рекурсивно обрабатываем вложенные элементы
+                    sb.Append(GetFullText(child));
+                }
+            }
+
+            return sb.ToString();
+        }
 
 
         public async Task<TelegramPost> ParseLastPostWithPhoto(string channelName)
