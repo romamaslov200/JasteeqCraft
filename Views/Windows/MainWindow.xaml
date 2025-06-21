@@ -128,7 +128,7 @@
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center">
-                        
+                       
                         <Border CornerRadius="15, 15, 15, 15"
                                 Margin="0,0,10,0"
                                 Padding="2"
@@ -156,7 +156,37 @@
                                                VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Button>
-                            </Border>
+                        </Border>
+                        
+                        
+                        <Border CornerRadius="15, 15, 15, 15"
+                                Margin="0,0,10,0"
+                                Padding="2"
+                                BorderBrush="#fff" Cursor="">
+
+                                <Button Padding="10,0,0,0"
+                                        Style="{DynamicResource BtnNav}"
+                                        Margin= "0, 0, 0, 0"
+            
+                                        Background="#0000"
+                                        BorderBrush="#0000"
+                                        Cursor="Hand"
+                                        Click="Button_PageInfo_Click"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal">
+                                        <svgc:SvgViewbox Margin="0, 0, 0, 0"
+                                                     Width="15"
+                                                     VerticalAlignment="Center"
+                                                     HorizontalAlignment="Center"
+                                                     Source="pack://application:,,,/Views/Resurces/Images/globe-svgrepo-com.svg" Cursor="">
+                                        </svgc:SvgViewbox>
+                                        <Label Content="Информация"
+                                               Foreground="#fff"
+                                               VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                        </Border>
                         
                         
                         <Border CornerRadius="15, 15, 15, 15"

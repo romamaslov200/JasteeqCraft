@@ -13,6 +13,7 @@ namespace JasteeqCraft.Models
         public string Date { get; set; }
         public string Text { get; set; }
         public string Views { get; set; }
+        public string FirstImageUrl => ImageUrls?.FirstOrDefault();
         public List<string> ImageUrls { get; set; } = new List<string>();
         public string VideoUrl { get; set; }
     }
@@ -21,6 +22,62 @@ namespace JasteeqCraft.Models
     {
         private readonly HttpClient _httpClient = new HttpClient();
         private const string BaseUrl = "https://t.me/s/";
+
+
+
+        public async Task<List<TelegramPost>> ParseLastPostsWithPhotos(string channelName, int count = 5)
+        {
+            var url = $"{BaseUrl}{channelName}";
+            var postsList = new List<TelegramPost>();
+
+            try
+            {
+                var html = await _httpClient.GetStringAsync(url);
+                var doc = new HtmlDocument();
+                doc.LoadHtml(html);
+
+                var postsWithPhotos = doc.DocumentNode
+                    .SelectNodes("//div[contains(@class, 'tgme_widget_message')][.//a[contains(@class, 'tgme_widget_message_photo_wrap')]]")?
+                    .Reverse()
+                    .Take(count);
+
+                if (postsWithPhotos == null)
+                    return postsList;
+
+                foreach (var node in postsWithPhotos)
+                {
+                    var post = new TelegramPost
+                    {
+                        Date = node.SelectSingleNode(".//time[@datetime]")?.GetAttributeValue("datetime", ""),
+                        Text = node.SelectSingleNode(".//div[contains(@class, 'tgme_widget_message_text')]")?.InnerText.Trim(),
+                        Views = node.SelectSingleNode(".//span[contains(@class, 'tgme_widget_message_views')]")?.InnerText
+                    };
+
+                    var firstPhotoNode = node.SelectSingleNode(".//a[contains(@class, 'tgme_widget_message_photo_wrap')]");
+                    if (firstPhotoNode != null)
+                    {
+                        var style = firstPhotoNode.GetAttributeValue("style", "");
+                        var urlStart = style.IndexOf("url('") + 5;
+                        var urlEnd = style.IndexOf("')", urlStart);
+                        if (urlStart > 0 && urlEnd > urlStart)
+                        {
+                            post.ImageUrls.Add(style.Substring(urlStart, urlEnd - urlStart));
+                        }
+                    }
+
+                    postsList.Add(post);
+                }
+
+                return postsList;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка парсинга: {ex.Message}");
+                return postsList;
+            }
+        }
+
+
 
 
         public async Task<TelegramPost> ParseLastPostWithPhoto(string channelName)

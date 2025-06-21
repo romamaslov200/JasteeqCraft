@@ -116,6 +116,11 @@ namespace JasteeqCraft
             NavArcCore.ChangeFrame<Settings_Page>();
         }
 
+        private void Button_PageInfo_Click(object sender, RoutedEventArgs e)
+        {
+            //NavArcCore.ChangeFrame(new Settings_Page());
+            NavArcCore.ChangeFrame<info_Page>();
+        }
         private void Button_WebSite_Click(object sender, RoutedEventArgs e)
         {
             Process.Start(new ProcessStartInfo

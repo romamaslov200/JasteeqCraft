@@ -23,7 +23,7 @@ namespace JasteeqCraft.Models
 
         public async void start()
         {
-            string url = "http://194.87.239.214/JasteeqCraft/launcher/launcherVersionPatch.txt";
+            string url = $"http://{App.IpServer}/JasteeqCraft/launcher/launcherVersionPatch.txt";
 
             string version = "";
 
@@ -43,7 +43,7 @@ namespace JasteeqCraft.Models
 
             if(version != ObjectJson.launcherVersionPatch)
             {
-                string downloadUrl = "http://194.87.239.214/JasteeqCraft/launcher/updater.exe";
+                string downloadUrl = $"http://{App.IpServer}/JasteeqCraft/launcher/updater.exe";
                 
                 MessageBox.Show($"Сейчас вы обновитесь с версии {ObjectJson.launcherVersionPatch} на {version}", "Обновлени лаунчера", MessageBoxButton.OK, MessageBoxImage.Information);
 
